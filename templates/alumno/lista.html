@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Lista de Estudiantes</h1>
+
+<a href="{{ url_for('crear') }}" class="btn btn-success mb-3">Nuevo Estudiante</a>
+
+<form method="GET" class="mb-3 d-flex gap-2">
+    <input type="text" name="buscar" placeholder="Buscar por nombre" class="form-control" value="{{ request.args.get('buscar', '') }}">
+    <select name="filtro" class="form-select">
+        <option value="">Todos</option>
+        <option value="aprobado" {% if request.args.get('filtro') == 'aprobado' %}selected{% endif %}>Aprobados</option>
+        <option value="reprobado" {% if request.args.get('filtro') == 'reprobado' %}selected{% endif %}>Reprobados</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Nota</th>
+            <th>Aprobado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alumno in alumnos %}
+        <tr>
+            <td>{{ alumno['id'] }}</td>
+            <td>{{ alumno['nombre'] }}</td>
+            <td>{{ alumno['apellido'] }}</td>
+            <td>{{ alumno['nota'] }}</td>
+            <td>{{ 'Sí' if alumno['aprobado'] else 'No' }}</td>
+            <td>{{ alumno['fecha'] }}</td>
+            <td>
+                <a href="{{ url_for('ver_alumno', alumno_id=alumno['id']) }}" class="btn btn-primary btn-sm">Ver</a>
+                <a href="{{ url_for('editar', alumno_id=alumno['id']) }}" class="btn btn-warning btn-sm">Editar</a>
+                
+                <form action="{{ url_for('eliminar', alumno_id=alumno['id']) }}" method="post" style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este alumno?')">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

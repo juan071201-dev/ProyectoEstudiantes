@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Detalles del Estudiante</h1>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Nombre:</strong> {{ alumno['nombre'] }}</li>
+    <li class="list-group-item"><strong>Apellido:</strong> {{ alumno['apellido'] }}</li>
+    <li class="list-group-item"><strong>Nota:</strong> {{ alumno['nota'] }}</li>
+    <li class="list-group-item"><strong>Aprobado:</strong> {{ 'Sí' if alumno['aprobado'] else 'No' }}</li>
+    <li class="list-group-item"><strong>Fecha:</strong> {{ alumno['fecha'] }}</li>
+</ul>
+
+<a href="{{ url_for('listar_alumnos') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}
