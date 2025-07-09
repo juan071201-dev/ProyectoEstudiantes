@@ -18,7 +18,10 @@ def listar_alumnos():
     alumnos = obtener_todos()
 
     if buscar:
-        alumnos = [a for a in alumnos if buscar in a['nombre'].lower()]
+        if buscar.isdigit():
+            alumnos = [a for a in alumnos if str(a['id']) == buscar]
+        else:
+            alumnos = [a for a in alumnos if buscar in a['nombre'].lower()]
     
     if filtro == "aprobado":
         alumnos = [a for a in alumnos if a['aprobado']]
@@ -26,6 +29,7 @@ def listar_alumnos():
         alumnos = [a for a in alumnos if not a['aprobado']]
 
     return render_template("alumno/lista.html", alumnos=alumnos)
+
 
 
 @app.route('/alumnos/<int:alumno_id>')

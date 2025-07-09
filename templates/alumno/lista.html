@@ -6,7 +6,7 @@
 <a href="{{ url_for('crear') }}" class="btn btn-success mb-3">Nuevo Estudiante</a>
 
 <form method="GET" class="mb-3 d-flex gap-2">
-    <input type="text" name="buscar" placeholder="Buscar por nombre" class="form-control" value="{{ request.args.get('buscar', '') }}">
+    <input type="text" name="buscar" placeholder="Buscar por nombre o ID" class="form-control" value="{{ request.args.get('buscar', '') }}">
     <select name="filtro" class="form-select">
         <option value="">Todos</option>
         <option value="aprobado" {% if request.args.get('filtro') == 'aprobado' %}selected{% endif %}>Aprobados</option>
